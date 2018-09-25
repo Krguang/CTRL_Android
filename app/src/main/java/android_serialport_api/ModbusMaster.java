@@ -325,13 +325,15 @@ public class ModbusMaster extends Thread {
 
         wenDu_valueIn = receiveBuff[1];
         shiDu_valueIn = receiveBuff[2];
-        shiDu_valueIn = receiveBuff[3];
-        shiDu_valueIn = receiveBuff[4];
-        shiDu_valueIn = receiveBuff[5];
-        shiDu_valueIn = receiveBuff[6];
-        shiDu_valueIn = receiveBuff[7];
-        shiDu_valueIn = receiveBuff[8];
-        shiDu_valueIn = receiveBuff[9];
+        yaCha_valueIn = receiveBuff[3];
+        beiYong_valueIn = receiveBuff[4];
+        yaQi_valueIn = receiveBuff[5];
+        danQi_valueIn = receiveBuff[6];
+        fuYa_valueIn = receiveBuff[7];
+        erYangHuaTan_valueIn = receiveBuff[8];
+        xiaoQi_valueIn = receiveBuff[9];
+        yaSuo_valueIn = receiveBuff[10];
+        yangQi_valueIn = receiveBuff[11];
 
     }
 

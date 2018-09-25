@@ -1,10 +1,9 @@
 package com.example.k.ctrl;
 
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     private Timer timer1 = new Timer();
     private TimerTask task1;
 
+    TextView wenDuDisplay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +27,16 @@ public class MainActivity extends AppCompatActivity {
 
         modbusMaster.start();
         timerTask();
+        initView();
     }
 
+    /**
+     * 初始化控件
+     */
+    private void initView(){
+
+        wenDuDisplay = findViewById(R.id.tv_wendu);
+    }
 
     /**
      * 定时器任务
@@ -47,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
                     public void run() {
                         modbusMonsterSend();
-
+                        uiUpdate();
                     }
                 });
             }
@@ -61,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
     private void modbusMonsterSend(){
 
         if (send03Or16Flag){
-            modbusMaster.sendDataMaster03((byte) 0,(byte)10);
+            modbusMaster.sendDataMaster03((byte) 0,(byte)12);
             send03Or16Flag = false;
         }else {
-            modbusMaster.sendDataMaster16((byte)0,(byte)10);
+            modbusMaster.sendDataMaster16((byte)16,(byte)7);
             send03Or16Flag = true;
         }
     }
@@ -74,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void uiUpdate(){
 
-
+        wenDuDisplay.setText(modbusMaster.wenDu_valueIn+"");
 
     }
 }
