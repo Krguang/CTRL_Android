@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 public class ModbusMaster extends Thread {
 
     private ArrayList<Byte> rxTemp = new ArrayList<Byte>();
@@ -27,8 +28,43 @@ public class ModbusMaster extends Thread {
     int[] receiveBuff = new int[256];
 
 
-    
+    /**
+     * 需要写到下位机的数据
+     */
+    public int wuYingDeng_relayOut;         //继电器输出
+    public int guanPianDeng_relayOut;
+    public int shuZhongDeng_relayOut;
+    public int xiaoDu_relayOut;
+    public int beiYong_relayOut;
 
+    public int zhaoMing1_valueOut;          //0-10V输出
+    public int zhaoMing2_valueOut;
+    public int zhaoMing3_valueOut;          //pwm输出
+    public int zhaoMing4_valueOut;
+    public int zhaoMing5_valueOut;
+    public int zhaoMing6_valueOut;
+
+
+    /**
+     * 需要从下位机读取的数据
+     */
+    public int geLiDianYuan_switchIn;       //开关量输入
+    public int huoZaiBaoJing_switchIn;
+    public int beiYong1_switchIn;
+    public int beiYong2_switchIn;
+
+    public int wenDu_valueIn;               //0-10V输入
+    public int shiDu_valueIn;
+    public int yaCha_valueIn;
+    public int beiYong_valueIn;
+
+    public int yaQi_valueIn;                //4-20mA输入
+    public int danQi_valueIn;
+    public int fuYa_valueIn;
+    public int erYangHuaTan_valueIn;
+    public int xiaoQi_valueIn;
+    public int yaSuo_valueIn;
+    public int yangQi_valueIn;
 
     public ModbusMaster() {
 
@@ -236,9 +272,66 @@ public class ModbusMaster extends Thread {
 
     private void slav_hand_10() {
 
+        if (1 == wuYingDeng_relayOut){
+
+            regHodingBuf[16] |= 1<<0;
+        }else {
+            regHodingBuf[16] &= ~(1<<0);
+        }
+
+        if (1 == guanPianDeng_relayOut){
+
+            regHodingBuf[16] |= 1<<1;
+        }else {
+            regHodingBuf[16] &= ~(1<<1);
+        }
+
+        if (1 == shuZhongDeng_relayOut){
+
+            regHodingBuf[16] |= 1<<2;
+        }else {
+            regHodingBuf[16] &= ~(1<<2);
+        }
+
+        if (1 == xiaoDu_relayOut){
+
+            regHodingBuf[16] |= 1<<3;
+        }else {
+            regHodingBuf[16] &= ~(1<<3);
+        }
+
+        if (1 == beiYong_relayOut){
+
+            regHodingBuf[16] |= 1<<4;
+        }else {
+            regHodingBuf[16] &= ~(1<<4);
+        }
+
+        regHodingBuf[17] = zhaoMing1_valueOut;
+        regHodingBuf[18] = zhaoMing2_valueOut;
+        regHodingBuf[19] = zhaoMing3_valueOut;
+        regHodingBuf[20] = zhaoMing4_valueOut;
+        regHodingBuf[21] = zhaoMing5_valueOut;
+        regHodingBuf[22] = zhaoMing6_valueOut;
+
     }
 
     private void slav_hand_03() {
+
+        geLiDianYuan_switchIn = (receiveBuff[0]>>0)&0x01;
+        huoZaiBaoJing_switchIn = (receiveBuff[0]>>1)&0x01;
+        beiYong1_switchIn = (receiveBuff[0]>>2)&0x01;
+        beiYong2_switchIn = (receiveBuff[0]>>3)&0x01;
+
+        wenDu_valueIn = receiveBuff[1];
+        shiDu_valueIn = receiveBuff[2];
+        shiDu_valueIn = receiveBuff[3];
+        shiDu_valueIn = receiveBuff[4];
+        shiDu_valueIn = receiveBuff[5];
+        shiDu_valueIn = receiveBuff[6];
+        shiDu_valueIn = receiveBuff[7];
+        shiDu_valueIn = receiveBuff[8];
+        shiDu_valueIn = receiveBuff[9];
 
     }
 
