@@ -359,8 +359,6 @@ public class ModbusMaster extends Thread {
             int highByte = crc.getUnsignedByte(reBuf[3 + 2*i]) << 8;
             int lowByte = crc.getUnsignedByte(reBuf[4 + 2*i]);
             receiveBuff[i] = highByte + lowByte;
-            //  receiveBuff[i] = crc.getUnsignedByte((byte)(reBuf[3 + 2*i] << 8)) + crc.getUnsignedByte((byte)(reBuf[4 + 2*i]));
-            //这句会导致高位丢失，因为reBuf[3 + 2*i] << 8后强制转换为byte后为0
         }
 
         slav_hand_03();

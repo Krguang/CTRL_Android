@@ -2,11 +2,10 @@ package com.example.k.ctrl;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
-
 import java.util.Timer;
 import java.util.TimerTask;
-
 import android_serialport_api.ModbusMaster;
 
 
@@ -84,6 +83,17 @@ public class MainActivity extends AppCompatActivity {
     private void uiUpdate(){
 
         wenDuDisplay.setText(modbusMaster.wenDu_valueIn+"");
+
+    }
+
+    public void bt_wuyingdeng(View view) {
+
+        if (1 == modbusMaster.wuYingDeng_relayOut){
+
+            modbusMaster.wuYingDeng_relayOut = 0;
+        }else {
+            modbusMaster.wuYingDeng_relayOut = 1;
+        }
 
     }
 }
