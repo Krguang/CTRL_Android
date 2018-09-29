@@ -37,6 +37,8 @@ public class ModbusMaster extends Thread {
     public int xiaoDu_relayOut;
     public int beiYong_relayOut;
 
+    public int beep;
+
     public int zhaoMing1_valueOut;          //0-10V输出
     public int zhaoMing2_valueOut;
     public int zhaoMing3_valueOut;          //pwm输出
@@ -142,7 +144,7 @@ public class ModbusMaster extends Thread {
 
     public void run() {
         super.run();
-        timer10ms.schedule(taskPoll,10,10);//5ms后开始，每5ms轮询一次
+        timer10ms.schedule(taskPoll,10,10);//10ms后开始，每10ms轮询一次
         while (!isInterrupted()) {
 
             int size;
@@ -307,6 +309,13 @@ public class ModbusMaster extends Thread {
             regHodingBuf[16] &= ~(1<<4);
         }
 
+        if (1 == beep){
+            regHodingBuf[16] |= 1<<5;
+        }else {
+            regHodingBuf[16] &= ~(1<<5);
+        }
+
+
         regHodingBuf[17] = zhaoMing1_valueOut;
         regHodingBuf[18] = zhaoMing2_valueOut;
         regHodingBuf[19] = zhaoMing3_valueOut;
@@ -323,10 +332,10 @@ public class ModbusMaster extends Thread {
         beiYong1_switchIn = (receiveBuff[0]>>2)&0x01;
         beiYong2_switchIn = (receiveBuff[0]>>3)&0x01;
 
-        wenDu_valueIn = receiveBuff[1];
-        shiDu_valueIn = receiveBuff[2];
-        yaCha_valueIn = receiveBuff[3];
-        beiYong_valueIn = receiveBuff[4];
+        beiYong_valueIn = receiveBuff[1];
+        wenDu_valueIn = receiveBuff[2];
+        shiDu_valueIn = receiveBuff[3];
+        yaCha_valueIn = receiveBuff[4];
         yaQi_valueIn = receiveBuff[5];
         danQi_valueIn = receiveBuff[6];
         fuYa_valueIn = receiveBuff[7];
